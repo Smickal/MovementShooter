@@ -98,7 +98,7 @@ public class PistolGun : Gun
             Rigidbody hitRigid = hit.collider.attachedRigidbody;
             if(hitRigid)
             {
-                hitRigid.AddForce((hit.point - mainCam.transform.position) * _forceFeedForwardValue, ForceMode.Impulse);
+                hitRigid.AddForce((hit.point - mainCam.transform.position).normalized * _forceFeedForwardValue, ForceMode.Impulse);
             }
         }
 

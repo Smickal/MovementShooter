@@ -8,11 +8,11 @@ public class JumpPad : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        ForceReceiver forceReceiver = collision.collider.GetComponent<ForceReceiver>();
+        Rigidbody rb = collision.collider.attachedRigidbody;
 
-        if (forceReceiver != null)
+        if (rb != null)
         {
-            forceReceiver.AddExternalForce(Vector3.up * jumpPadForce);
+           rb.AddForce(Vector3.up * jumpPadForce, ForceMode.Impulse);
         }
     }
 }

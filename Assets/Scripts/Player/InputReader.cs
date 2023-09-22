@@ -25,6 +25,10 @@ public class InputReader : MonoBehaviour, PlayerControls.IGamePlayActions
 
     public event Action ReloadAction;
 
+    public event Action DashAction;
+    public event Action QAbilityAction;
+    public event Action EAbilityAction;
+
     bool isSliding = false;
     bool isAttack = false;
 
@@ -142,5 +146,21 @@ public class InputReader : MonoBehaviour, PlayerControls.IGamePlayActions
         inventoryState = InventoryType.Knife;
     }
 
-   
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if(context.performed) return;
+        DashAction?.Invoke();
+    }
+
+    public void OnAbility1(InputAction.CallbackContext context)
+    {
+        if (context.performed) return;
+        QAbilityAction?.Invoke();
+    }
+
+    public void OnAbility2(InputAction.CallbackContext context)
+    {
+        if (context.performed) return;
+        EAbilityAction?.Invoke();
+    }
 }

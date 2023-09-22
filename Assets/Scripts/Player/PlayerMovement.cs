@@ -40,8 +40,6 @@ public class PlayerMovement: MonoBehaviour
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
-
-
     public SpeedDebugText speedDebugText;
     public Transform orientation;
 
@@ -52,12 +50,14 @@ public class PlayerMovement: MonoBehaviour
 
     Rigidbody rb;
 
+    public bool IsDragActivated;
     public bool IsGround;
     public bool IsSliding;
     public bool IsWallRunning;
 
     public MovementState state;
     public PlayerCam camHandler;
+
 
     public enum MovementState
     {
@@ -95,6 +95,12 @@ public class PlayerMovement: MonoBehaviour
 
         SpeedControl();
         StateHandler();
+        HandleGroundDrag();
+    }
+
+    private void HandleGroundDrag()
+    {
+        if (IsDragActivated == false) return;
 
         // handle drag
         if (IsGround)
@@ -244,7 +250,7 @@ public class PlayerMovement: MonoBehaviour
     private void SpeedControl()
     {
         // limiting speed on slope
-        if (OnSlope() && !exitingSlope)
+        if (OnSlope() && !exitingSlope )
         {
             if (rb.velocity.magnitude > moveSpeed)
                 rb.velocity = rb.velocity.normalized * moveSpeed;
@@ -266,6 +272,7 @@ public class PlayerMovement: MonoBehaviour
 
     private void Jump()
     {
+        if (IsWallRunning) return;
         exitingSlope = true;
 
         // reset y velocity

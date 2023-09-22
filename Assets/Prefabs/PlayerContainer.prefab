@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 2806704932074661371}
   - component: {fileID: 6428942350075542819}
   - component: {fileID: 2089911642317393387}
+  - component: {fileID: 4205302139498410346}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -266,7 +267,7 @@ MonoBehaviour:
   walkSpeed: 7
   sprintSpeed: 0
   slideSpeed: 30
-  wallRunningSpeed: 12
+  wallRunningSpeed: 10
   speedIncreaseMultiplier: 3
   slopeIncreaseMultiplier: 5
   groundDrag: 5
@@ -282,6 +283,7 @@ MonoBehaviour:
   maxSlopeAngle: 40
   speedDebugText: {fileID: 0}
   orientation: {fileID: 1736993977608830548}
+  IsDragActivated: 0
   IsGround: 0
   IsSliding: 0
   IsWallRunning: 0
@@ -299,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a806d5a17788d6e49919f00159ebba75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallRunningForce: 40
+  wallRunningForce: 200
   wallRunningTime: 8
   wallCheckDistance: 0.7
   minGroundDistance: 1.5
@@ -314,8 +316,8 @@ MonoBehaviour:
   tilt: 5
   tiltDuration: 0.5
   extraFOV: 10
-  fovDuration: 0.25
-  exitWallTime: 0.1
+  fovDuration: 0.3
+  exitWallTime: 0.2
 --- !u!114 &6428942350075542819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,6 +358,23 @@ MonoBehaviour:
   - {fileID: 7674172729578132731}
   - {fileID: 6749696473206725277}
   _ammoReserveText: {fileID: 0}
+--- !u!114 &4205302139498410346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2970321871909060193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be1b5d67ab854514d8242b77c8dcd2a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dashForce: 10
+  _dashCooldown: 1
+  _pm: {fileID: 2200889191780098989}
+  _rb: {fileID: 2140898414478320345}
+  _orientation: {fileID: 1736993977608830548}
 --- !u!1 &3767673342441223723
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +403,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3767673342441223723}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.00027142404, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.55, z: 0.14925}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -791,7 +810,7 @@ MonoBehaviour:
   m_ApplyAfter: 3
   m_Tilt: 0
   m_Pan: 0
-  m_Dutch: 0.0311029
+  m_Dutch: 0
   m_ZoomScale: 1
   m_FollowAttachment: 1
   m_LookAtAttachment: 1
@@ -1043,6 +1062,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3239351665386526303}
     m_Modifications:
+    - target: {fileID: 5217884280960226967, guid: cb29e11e6e0c4b6429c600cd73679a3e,
+        type: 3}
+      propertyPath: _knifeKnockbackForce
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6330621510837065039, guid: cb29e11e6e0c4b6429c600cd73679a3e,
         type: 3}
       propertyPath: m_LocalPosition.x

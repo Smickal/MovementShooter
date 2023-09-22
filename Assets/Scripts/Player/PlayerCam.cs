@@ -55,26 +55,30 @@ public class PlayerCam : MonoBehaviour
 
     public void ActivateTilt(float tiltDegree, float duration)
     {
-        isTilting = true;
         targetTilt = tiltDegree;
         tiltDuration = duration;
         tiltTimer = 0f;
 
-        Invoke(nameof(StopTilting), duration);
+        isTilting = true;
+        StopCoroutine(StopCameraTilt());
+        StartCoroutine(StopCameraTilt());
     }
 
     private void TiltCamera()
     {
         tiltTimer += Time.deltaTime;
-        _CineRecomp.m_Dutch = Mathf.SmoothStep(lastTiltValue, targetTilt, tiltTimer / tiltDuration);
+        _CineRecomp.m_Dutch = Mathf.Lerp(_CineRecomp.m_Dutch, targetTilt, tiltTimer / tiltDuration);
     }
 
 
-    private void StopTilting()
+    IEnumerator StopCameraTilt()
     {
+        yield return new WaitForSeconds(tiltDuration);
+
         isTilting = false;
         lastTiltValue = targetTilt;
     }
+
 
     public void ActivateFovChange(float fovDegree, float duration)
     {

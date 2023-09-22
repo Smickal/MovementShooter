@@ -69,27 +69,33 @@ public class WallRunning : MonoBehaviour
         isAboveGround = !Physics.Raycast(transform.position, Vector3.down, out groundHit, minGroundDistance);
 
 
+        //check for wall run criteria
         if((isLeftWall || isRightWall) && rb.velocity.magnitude > 0f && isAboveGround && 
             (InputReader.Instance.MovementValue.y > 0.1f) && 
             !exitingWall)
         {
             StartWallRunning();
         }
-        else
-        {
-            StopWallRunning();
-        }
 
 
-        if(exitingWall)
+        //Exiting Wall
+        else if(exitingWall)
         {
             if (pm.IsWallRunning)
                 StopWallRunning();
 
             if (exitWallTimer > 0)
                 exitWallTimer -= Time.deltaTime;
-            else
+            
+            if(exitWallTimer <= 0)
                 exitingWall = false;
+        }
+
+        //
+        else
+        {
+            if (pm.IsWallRunning)
+                StopWallRunning();
         }
 
     }
@@ -97,7 +103,8 @@ public class WallRunning : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (pm.IsWallRunning) WallRunningMovement();
+        if (pm.IsWallRunning) 
+            WallRunningMovement();
     }
 
     private void StartWallRunning()
@@ -106,11 +113,15 @@ public class WallRunning : MonoBehaviour
 
         wallRunningTimer = wallRunningTime;
 
+
         pm.IsWallRunning = true;   
         groundForceMultiplier = 1f;
 
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+
         if (isLeftWall) pm.camHandler.ActivateTilt(-tilt, tiltDuration);
-        if (isRightWall) pm.camHandler.ActivateTilt(tilt, tiltDuration);
+        else if (isRightWall) pm.camHandler.ActivateTilt(tilt, tiltDuration);
 
         pm.camHandler.ActivateFovChange(targetFOV, fovDuration);
     }
@@ -132,9 +143,10 @@ public class WallRunning : MonoBehaviour
         }
 
        
-        rb.AddForce(wallProjectedDirection * wallRunningForce + -_orientation.up * 40f * groundForceMultiplier, ForceMode.Force);
+        rb.AddForce(wallProjectedDirection * wallRunningForce, ForceMode.Force);
 
-
+        //Debug.Log(rb.angularVelocity);
+        
         groundForceMultiplier += Time.deltaTime;
         wallRunningTimer -= Time.deltaTime;
         if (wallRunningTimer < 0) StopWallRunning();
@@ -144,8 +156,6 @@ public class WallRunning : MonoBehaviour
     private void StopWallRunning()
     {
         if (pm.IsWallRunning == false) return;
-
-        Debug.Log("StopWallRun");
 
         rb.useGravity = true;
         pm.IsWallRunning = false;
@@ -157,18 +167,15 @@ public class WallRunning : MonoBehaviour
     {
         if (!pm.IsWallRunning) return;
 
-
         exitingWall = true;
         exitWallTimer = exitWallTime;
 
+        Vector3 wallNormal = isRightWall ? rightWall.normal : leftWall.normal;
+        Vector3 forceToApply = transform.up * wallJumpUpForce + wallJumpSideForce * wallNormal;
 
 
-        Vector3 wallNormal = isRightWall == true ? rightWall.normal : leftWall.normal;
-
-        Vector3 forceToApply = _orientation.up * wallJumpUpForce + wallJumpSideForce * wallNormal;
-
-        //addForce
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.position.z);
+        //Add JumpForce
+        // rb.velocity = new Vector3(rb.velocity.x, 0f, rb.position.z);
         rb.AddForce(forceToApply, ForceMode.Impulse);
 
     }

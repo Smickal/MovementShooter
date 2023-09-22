@@ -125,6 +125,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""6daf6e42-09a5-41be-8680-1a8ffc8811c0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ability1"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8b383e8-a06d-4b98-930e-f3fa671b15a9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ability2"",
+                    ""type"": ""Button"",
+                    ""id"": ""05d0d754-f5a3-473a-a720-abbc53572d39"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -292,6 +319,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Reload"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14cac76e-e9e8-42e6-9df3-f4e2dd7bb6b4"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c7f4cba-f38b-40af-891a-c53ec0f48b2e"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ability1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5a93a5c-dc6f-4fc1-84ef-528de99a044a"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ability2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -311,6 +371,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_GamePlay_KnifeInventory = m_GamePlay.FindAction("KnifeInventory", throwIfNotFound: true);
         m_GamePlay_Attack = m_GamePlay.FindAction("Attack", throwIfNotFound: true);
         m_GamePlay_Reload = m_GamePlay.FindAction("Reload", throwIfNotFound: true);
+        m_GamePlay_Dash = m_GamePlay.FindAction("Dash", throwIfNotFound: true);
+        m_GamePlay_Ability1 = m_GamePlay.FindAction("Ability1", throwIfNotFound: true);
+        m_GamePlay_Ability2 = m_GamePlay.FindAction("Ability2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -383,6 +446,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_KnifeInventory;
     private readonly InputAction m_GamePlay_Attack;
     private readonly InputAction m_GamePlay_Reload;
+    private readonly InputAction m_GamePlay_Dash;
+    private readonly InputAction m_GamePlay_Ability1;
+    private readonly InputAction m_GamePlay_Ability2;
     public struct GamePlayActions
     {
         private @PlayerControls m_Wrapper;
@@ -398,6 +464,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @KnifeInventory => m_Wrapper.m_GamePlay_KnifeInventory;
         public InputAction @Attack => m_Wrapper.m_GamePlay_Attack;
         public InputAction @Reload => m_Wrapper.m_GamePlay_Reload;
+        public InputAction @Dash => m_Wrapper.m_GamePlay_Dash;
+        public InputAction @Ability1 => m_Wrapper.m_GamePlay_Ability1;
+        public InputAction @Ability2 => m_Wrapper.m_GamePlay_Ability2;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -440,6 +509,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
+            @Ability1.started += instance.OnAbility1;
+            @Ability1.performed += instance.OnAbility1;
+            @Ability1.canceled += instance.OnAbility1;
+            @Ability2.started += instance.OnAbility2;
+            @Ability2.performed += instance.OnAbility2;
+            @Ability2.canceled += instance.OnAbility2;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -477,6 +555,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
+            @Ability1.started -= instance.OnAbility1;
+            @Ability1.performed -= instance.OnAbility1;
+            @Ability1.canceled -= instance.OnAbility1;
+            @Ability2.started -= instance.OnAbility2;
+            @Ability2.performed -= instance.OnAbility2;
+            @Ability2.canceled -= instance.OnAbility2;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -507,5 +594,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnKnifeInventory(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
+        void OnAbility1(InputAction.CallbackContext context);
+        void OnAbility2(InputAction.CallbackContext context);
     }
 }

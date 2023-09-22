@@ -56,23 +56,30 @@ public class Knife : Weapon
     {
         DelayForCombo();
         ComboWindowTimeActivation();
-
-        //Check for RaycastHit
-        if(isComboDelayActivated)
-        {
-            RaycastHit[] hitObjs = Physics.RaycastAll(transform.position, transform.up, _meleeRange);
-
-            foreach(RaycastHit obj in hitObjs)
-            {
-                Rigidbody rb = obj.collider.attachedRigidbody;
-
-                if(rb == null) continue;
-                rb.AddForce(mainCam.transform.forward * _knifeKnockbackForce, ForceMode.Impulse);
-            }
-        }
+   
+        ApplyForceAndDamage();
 
         //Debugs RayDamageRange
         Debug.DrawRay(transform.position, transform.up * _meleeRange, Color.red);
+    }
+
+    private void ApplyForceAndDamage()
+    {
+        if (isComboDelayActivated)
+        {
+            //Check for RaycastHit according to swords length
+            RaycastHit[] hitObjs = Physics.RaycastAll(transform.position, transform.up, _meleeRange);
+
+            foreach (RaycastHit obj in hitObjs)
+            {
+                Rigidbody rb = obj.collider.attachedRigidbody;
+
+                if (rb == null) continue;
+                rb.AddForce(mainCam.transform.forward * _knifeKnockbackForce, ForceMode.Impulse);
+
+                //TODO: Add damage here
+            }
+        }
     }
 
     private void ComboWindowTimeActivation()
@@ -118,12 +125,7 @@ public class Knife : Weapon
                 comboCounter = 0;
             }
         }
-
-        //Collider check with range
-
-
-        //add force to enemy
-
+        
 
         //Add damage to enemy
 
