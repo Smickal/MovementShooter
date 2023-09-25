@@ -10,6 +10,7 @@ public class PlayerMovement: MonoBehaviour
     public float sprintSpeed;
     public float slideSpeed;
     public float wallRunningSpeed;
+    public float dashSpeed;
 
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
@@ -50,10 +51,11 @@ public class PlayerMovement: MonoBehaviour
 
     Rigidbody rb;
 
-    public bool IsDragActivated;
-    public bool IsGround;
-    public bool IsSliding;
-    public bool IsWallRunning;
+    [HideInInspector] public bool IsDragActivated;
+    [HideInInspector] public bool IsGround;
+    [HideInInspector] public bool IsSliding;
+    [HideInInspector] public bool IsWallRunning;
+    [HideInInspector] public bool IsDashing;
 
     public MovementState state;
     public PlayerCam camHandler;
@@ -66,7 +68,8 @@ public class PlayerMovement: MonoBehaviour
         crouching,
         sliding,
         air,
-        wallRunning
+        wallRunning,
+        dash
     }
 
     
@@ -100,10 +103,8 @@ public class PlayerMovement: MonoBehaviour
 
     private void HandleGroundDrag()
     {
-        if (IsDragActivated == false) return;
-
         // handle drag
-        if (IsGround)
+        if (state == MovementState.walking || state == MovementState.crouching)
             rb.drag = groundDrag;
         else
             rb.drag = 0;
@@ -132,8 +133,15 @@ public class PlayerMovement: MonoBehaviour
 
     private void StateHandler()
     {
+        //Mode - Dash
+        if(IsDashing)
+        {
+            state = MovementState.dash;
+            desiredMoveSpeed = dashSpeed;
+        }
+
         // Mode - Sliding
-        if (IsSliding)
+        else if (IsSliding)
         {
             state = MovementState.sliding;
 
@@ -249,6 +257,8 @@ public class PlayerMovement: MonoBehaviour
 
     private void SpeedControl()
     {
+        if (state == MovementState.dash) return;
+
         // limiting speed on slope
         if (OnSlope() && !exitingSlope )
         {

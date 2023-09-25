@@ -159,7 +159,7 @@ public class WallRunning : MonoBehaviour
 
         rb.useGravity = true;
         pm.IsWallRunning = false;
-        pm.camHandler.ActivateTilt(0, tiltDuration);
+        pm.camHandler.ResetTilt();
         pm.camHandler.ResetFOV();
     }
 

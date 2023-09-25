@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 2970321871909060193}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.98, z: 0}
+  m_LocalPosition: {x: -0.44, y: 0.98, z: -2.82}
   m_LocalScale: {x: 0.74, y: 1, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -268,6 +268,7 @@ MonoBehaviour:
   sprintSpeed: 0
   slideSpeed: 30
   wallRunningSpeed: 10
+  dashSpeed: 20
   speedIncreaseMultiplier: 3
   slopeIncreaseMultiplier: 5
   groundDrag: 5
@@ -287,6 +288,7 @@ MonoBehaviour:
   IsGround: 0
   IsSliding: 0
   IsWallRunning: 0
+  IsDashing: 0
   state: 0
   camHandler: {fileID: 5875945978392375071}
 --- !u!114 &2806704932074661371
@@ -370,8 +372,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1b5d67ab854514d8242b77c8dcd2a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dashForce: 10
-  _dashCooldown: 1
+  _dashForce: 20
+  _dashUpwardForce: 0
+  _dashDuration: 0.25
+  dashCD: 2.5
+  _extraDashCameraFOV: 10
+  _dashFOVDuration: 0.25
   _pm: {fileID: 2200889191780098989}
   _rb: {fileID: 2140898414478320345}
   _orientation: {fileID: 1736993977608830548}
@@ -404,7 +410,7 @@ Transform:
   m_GameObject: {fileID: 3767673342441223723}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.55, z: 0.14925}
+  m_LocalPosition: {x: -0.44, y: 1.55, z: -2.67075}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -749,7 +755,7 @@ Transform:
   m_GameObject: {fileID: 6259032112783653680}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.55, z: 0.14925}
+  m_LocalPosition: {x: -0.44, y: 1.55, z: -2.67075}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

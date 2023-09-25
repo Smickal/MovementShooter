@@ -6,67 +6,89 @@ public class Dash : MonoBehaviour
 {
     [Header("DashAttributes")]
     [SerializeField] private float _dashForce;
-    [SerializeField] private float _dashCooldown = 1f;
-    float dashTimer = 0f;
+    [SerializeField] private float _dashUpwardForce;
+    [SerializeField] private float _dashDuration = 1f;
+
+
+    [Header("Cooldown")]
+    [SerializeField] private float dashCD;
+    float dashCooldownTimer = 0f;
+
+    [Header("Camera")]
+    [SerializeField] float _extraDashCameraFOV = 5f;
+    [SerializeField] float _dashFOVDuration = 0.25f;
+    float currentCamFOV;
 
     [Space(5)]
     [Header("Reference")]
     [SerializeField] PlayerMovement _pm;
     [SerializeField] Rigidbody _rb;
     [SerializeField] Transform _orientation;
-
-    bool isDashActivated = false;
+    [SerializeField] DashCooldownUI _ui;
+    
+    private Vector3 delayedForceToApply;
 
     private void Start()
     {
-        InputReader.Instance.DashAction += StartDash;
+        InputReader.Instance.DashAction += EnterDash;
+        dashCooldownTimer = dashCD;
     }
 
     private void Update()
     {
-        if(isDashActivated)
-        {
-            dashTimer += Time.deltaTime;
+        if(_pm.IsDashing) StartDash();
 
-            if(dashTimer >= _dashCooldown)
-            {
-                StopDash();
-            }
+
+        if(dashCooldownTimer < dashCD)
+        {
+            dashCooldownTimer += Time.deltaTime;
+            _ui.ActivateDash1(dashCooldownTimer, dashCD);
         }
+    }
+
+    private void EnterDash()
+    {
+        if (dashCooldownTimer < dashCD) return;
+
+        currentCamFOV = Camera.main.fieldOfView;
+
+        _pm.IsDashing = true;
+        _pm.camHandler.ActivateFovChange(currentCamFOV + _extraDashCameraFOV, _dashFOVDuration);
     }
 
     private void StartDash()
     {
-        if (isDashActivated) return;
+        if (dashCooldownTimer < dashCD) return;
+        else dashCooldownTimer = 0f;
 
-        dashTimer = 0f;
-        isDashActivated = true;
+        _rb.useGravity = false;
 
-        Vector2 movementDirInput = InputReader.Instance.MovementValue;
+        float horizontalInput = InputReader.Instance.MovementValue.x;
+        float verticalInput = InputReader.Instance.MovementValue.y;
 
-        float horizontalInput = movementDirInput.x;
-        float verticalInput = movementDirInput.y;
-
-        _pm.IsDragActivated = false;
+        Vector3 forceToApply = Vector3.zero;
 
         if (horizontalInput == 0f && verticalInput == 0f)
-        {          
-            _rb.AddForce(_orientation.forward * _dashForce, ForceMode.Impulse);
+        {
+            forceToApply = _orientation.forward * _dashForce + _orientation.up * _dashUpwardForce;
         }
         else
         {
-            
-            Vector3 dashDir = verticalInput * _dashForce *_orientation.forward + horizontalInput * _dashForce * _orientation.right;
-
-            _rb.AddForce(dashDir, ForceMode.Impulse);
+            forceToApply = _orientation.forward * verticalInput * _dashForce
+                + _orientation.right * horizontalInput * _dashForce; 
         }
 
 
+        _rb.velocity = Vector3.zero;
+
+        _rb.AddForce(forceToApply, ForceMode.Impulse);
+        Invoke(nameof(ResetDash), _dashDuration);
     }
 
-    private void StopDash()
+    private void ResetDash()
     {
-        _pm.IsDragActivated = true;
-        isDashActivated = false;
+        _pm.IsDashing = false;
+        _rb.useGravity = true;
+        _pm.camHandler.ResetFOV();
     }
 }

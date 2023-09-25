@@ -333,6 +333,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""7eb1e778-8ed6-49ff-9371-ce461f33660b"",
+                    ""path"": ""<Mouse>/backButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""3c7f4cba-f38b-40af-891a-c53ec0f48b2e"",
                     ""path"": ""<Keyboard>/q"",
                     ""interactions"": """",
