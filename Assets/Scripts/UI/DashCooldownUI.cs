@@ -46,21 +46,17 @@ public class DashCooldownUI : MonoBehaviour
 
     public void ActivateDash1(float value, float maxValue)
     {
-        Debug.Log("Called");
-
         _cvGroup.alpha = 1f;
         _dashSlider1.value = value/maxValue;
         timer = _fadeOutTime;
+        isFadeOut = true;
 
-
-        StopCoroutine(StopFade());
+        StopAllCoroutines();
         StartCoroutine(StopFade());
     }
 
     IEnumerator StopFade()
     {
-        isFadeOut = true;
-
         yield return new WaitForSeconds(_fadeOutTime);
         isFadeOut = false;
     }

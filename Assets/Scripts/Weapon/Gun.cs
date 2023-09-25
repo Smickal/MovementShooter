@@ -5,8 +5,11 @@ using UnityEngine;
 
 public abstract class Gun : Weapon
 {
+    [SerializeField] protected bool isUnlimitedAmmo = false;
+
     [Header("GunAttributes")]
     [SerializeField] protected GunType _gunType;
+    [SerializeField] protected bool _isSemiautomatic;
 
     [SerializeField] protected float _equipGunTime;
     [SerializeField] protected float _gunReloadTime;
@@ -14,7 +17,6 @@ public abstract class Gun : Weapon
     [SerializeField] protected float _forceFeedBackValue;
     [SerializeField] protected float _forceFeedForwardValue;
     [SerializeField] protected float _gunRange;
-    [SerializeField] protected bool _isSemiautomatic;
 
     [Space(5)]
     [Header("AmmoAttributes")]
@@ -95,7 +97,7 @@ public abstract class Gun : Weapon
 
     protected void ReduceAmmoInMag()
     {
-        if (ammoInMag == 0) return;
+        if (ammoInMag == 0 || isUnlimitedAmmo) return;
 
         ammoInMag--;
 
