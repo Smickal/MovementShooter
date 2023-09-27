@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 6428942350075542819}
   - component: {fileID: 2089911642317393387}
   - component: {fileID: 4205302139498410346}
+  - component: {fileID: 1188262226849034855}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -124,6 +125,7 @@ Transform:
   m_Children:
   - {fileID: 1736993977608830548}
   - {fileID: 6898489445740753252}
+  - {fileID: 2802949067657437902}
   m_Father: {fileID: 4882473526973871827}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1716276163928408574
@@ -381,6 +383,25 @@ MonoBehaviour:
   _pm: {fileID: 2200889191780098989}
   _rb: {fileID: 2140898414478320345}
   _orientation: {fileID: 1736993977608830548}
+  _ui: {fileID: 0}
+--- !u!114 &1188262226849034855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2970321871909060193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a71bcc62fbc90554693c151b746d9053, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <MaxGrabDistance>k__BackingField: 10
+  <ObjectLayerMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 4096
+  <cameraPos>k__BackingField: {fileID: 2802949067657437902}
+  closestCollider: {fileID: 0}
 --- !u!1 &3767673342441223723
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,7 +431,7 @@ Transform:
   m_GameObject: {fileID: 3767673342441223723}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.44, y: 1.55, z: -2.67075}
+  m_LocalPosition: {x: -0.44, y: 1.55, z: -3.241}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -581,7 +602,7 @@ Transform:
   m_GameObject: {fileID: 4434229354835430439}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.724}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -602,7 +623,7 @@ GameObject:
   - component: {fileID: 3559997741518394316}
   - component: {fileID: 441190477477670824}
   m_Layer: 3
-  m_Name: HeadPos
+  m_Name: SunGlass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -755,7 +776,7 @@ Transform:
   m_GameObject: {fileID: 6259032112783653680}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.44, y: 1.55, z: -2.67075}
+  m_LocalPosition: {x: -0.44, y: 1.55, z: -3.241}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -781,7 +802,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 6898489445740753252}
+  m_Follow: {fileID: 2802949067657437902}
   m_Lens:
     FieldOfView: 90
     OrthographicSize: 10
@@ -897,7 +918,7 @@ MonoBehaviour:
   m_BindingMode: 1
   m_FollowOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0.03
-  m_YDamping: 0
+  m_YDamping: 0.01
   m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
@@ -997,6 +1018,37 @@ Transform:
   m_Children:
   - {fileID: 4762830989634885957}
   m_Father: {fileID: 1990466927131993794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8550512373472150051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2802949067657437902}
+  m_Layer: 3
+  m_Name: CameraPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2802949067657437902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8550512373472150051}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.57, z: 0.404}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5401539433325743066}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8722681891331757136
 GameObject:
