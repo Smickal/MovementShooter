@@ -26,12 +26,16 @@ public class InputReader : MonoBehaviour, PlayerControls.IGamePlayActions
     public event Action ReloadAction;
 
     public event Action DashAction;
-    public event Action QAbilityAction;
+    public event Action QAbilityActionPressed;
+    public event Action QAbilityActionUnPressed;
     public event Action EAbilityAction;
 
     bool isSliding = false;
     bool isAttack = false;
+    bool isGrabAbility = false;
 
+
+    public bool IsGrabAbility { get { return isGrabAbility; } } 
     public bool IsSliding { get { return isSliding; } }
     public bool IsAttack { get { return isAttack; } }   
     public Vector2 MovementValue { get { return movementValue; }}
@@ -154,8 +158,17 @@ public class InputReader : MonoBehaviour, PlayerControls.IGamePlayActions
 
     public void OnAbility1(InputAction.CallbackContext context)
     {
-        if (context.performed) return;
-        QAbilityAction?.Invoke();
+        if (context.performed)
+        {
+            QAbilityActionPressed?.Invoke();
+            isGrabAbility = true;
+        }
+
+        if (context.canceled)
+        {
+            QAbilityActionUnPressed?.Invoke();
+            isGrabAbility = false;
+        }
     }
 
     public void OnAbility2(InputAction.CallbackContext context)

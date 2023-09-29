@@ -4,9 +4,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class GrabState : ForcePushBaseState
+public class DetectionCheckState: ForcePushBaseState
 {
-    public GrabState(ForcePushStateMachine stateMachine) : base(stateMachine) { }
+    public DetectionCheckState(ForcePushStateMachine stateMachine) : base(stateMachine) { }
 
     Vector3 boxCastSize = Vector3.one;
 
@@ -20,6 +20,8 @@ public class GrabState : ForcePushBaseState
     IGrabAble currentGrabItem;
     IGrabAble lastGrabItem;
     LayerMask objectLayerMask;
+
+    Collider closestCollider;
     public override void Enter()
     {
         mainCam = Camera.main;
@@ -32,6 +34,16 @@ public class GrabState : ForcePushBaseState
     {
         GetClosestGrabObject();
         ActivateAndDeactivateOutlines();
+
+        if(InputReader.Instance.IsGrabAbility && closestCollider != null)
+        {
+            StateMachine.grabItemCollider = closestCollider;
+            closestCollider.GetComponent<IGrabAble>().DeactivateOutline();
+
+            StateMachine.SwitchState(new GrabState(StateMachine));
+        }
+
+        
     }
 
 
@@ -68,20 +80,20 @@ public class GrabState : ForcePushBaseState
             if (hit.collider.attachedRigidbody == null || grabAble == null) continue;
 
             Vector3 hitLoc = hit.collider.gameObject.transform.position;
-            Debug.DrawLine(mainCam.transform.position, hitLoc, Color.green);
 
             float distanceBetweenPoint = Vector3.Distance(hitLoc, rayHitPoint);
             if (distanceBetweenPoint < closestDistance)
             {
+
                 closestDistance = distanceBetweenPoint;
-                StateMachine.closestCollider = hit.collider;
+                closestCollider = hit.collider;
             }
         }
 
 
         if (boxCastHit.Length == 0)
         {
-            StateMachine.closestCollider = null;
+            closestCollider = null;
             currentGrabItem?.DeactivateOutline();
             
             if(lastGrabItem != null)
@@ -90,22 +102,15 @@ public class GrabState : ForcePushBaseState
                 lastGrabItem = null;
             }
         }
-
-        if (StateMachine.closestCollider != null)
-        {
-            Debug.DrawLine(mainCam.transform.position, StateMachine.closestCollider.transform.position, Color.red);
-        }
-
-        Debug.DrawRay(mainCam.transform.position, mainCam.transform.forward, Color.black);
     }
 
     private void ActivateAndDeactivateOutlines()
     {
-        if (StateMachine.closestCollider == null)
+        if (closestCollider == null)
         {
             return;
         }
-        currentGrabItem = StateMachine.closestCollider.GetComponent<IGrabAble>();
+        currentGrabItem = closestCollider.GetComponent<IGrabAble>();
 
         if (currentGrabItem != lastGrabItem)
         {

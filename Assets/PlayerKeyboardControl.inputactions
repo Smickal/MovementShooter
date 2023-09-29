@@ -324,7 +324,7 @@
                     "name": "",
                     "id": "3c7f4cba-f38b-40af-891a-c53ec0f48b2e",
                     "path": "<Keyboard>/q",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Ability1",

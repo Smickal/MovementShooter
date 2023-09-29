@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &245589677185895540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8985180202279051751}
+  m_Layer: 0
+  m_Name: GrabPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8985180202279051751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245589677185895540}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1990466927131993794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2352218832297167290
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,11 +428,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MaxGrabDistance>k__BackingField: 10
+  <PullForce>k__BackingField: 10
+  <GrabForce>k__BackingField: 50
   <ObjectLayerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 4096
   <cameraPos>k__BackingField: {fileID: 2802949067657437902}
-  closestCollider: {fileID: 0}
+  <grabPos>k__BackingField: {fileID: 8985180202279051751}
+  grabItemCollider: {fileID: 0}
 --- !u!1 &3767673342441223723
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,13 +465,14 @@ Transform:
   m_GameObject: {fileID: 3767673342441223723}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.44, y: 1.55, z: -3.241}
+  m_LocalPosition: {x: -0.44, y: 1.55, z: -3.2245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4845076587118648488}
   - {fileID: 1711987623885638752}
   - {fileID: 3239351665386526303}
+  - {fileID: 8985180202279051751}
   m_Father: {fileID: 1746489520843508493}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &3412810247586536632
@@ -515,7 +550,7 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 1
+  m_UpdateMethod: 2
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
@@ -556,7 +591,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -776,7 +811,7 @@ Transform:
   m_GameObject: {fileID: 6259032112783653680}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.44, y: 1.55, z: -3.241}
+  m_LocalPosition: {x: -0.44, y: 1.55, z: -3.2245}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -947,8 +982,8 @@ MonoBehaviour:
     m_InputAxisName: Mouse Y
     m_InputAxisValue: 0
     m_InvertInput: 1
-    m_MinValue: -70
-    m_MaxValue: 70
+    m_MinValue: -85
+    m_MaxValue: 90
     m_Wrap: 0
     m_Recentering:
       m_enabled: 0
@@ -1044,7 +1079,7 @@ Transform:
   m_GameObject: {fileID: 8550512373472150051}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.57, z: 0.404}
+  m_LocalPosition: {x: 0, y: 0.57, z: 0.426}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
