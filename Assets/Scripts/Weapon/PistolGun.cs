@@ -21,7 +21,9 @@ public class PistolGun : Gun
     private void OnEnable()
     {
         PlayEnterAnimation();
-        Invoke(nameof(ActivateGun), _equipGunTime);
+
+        if(!stateMachine.IsGrabbing)
+            Invoke(nameof(ActivateWeapon), _equipGunTime);
 
         _reserveText.SetText(ammoInMag.ToString(), ammoInInvetory.ToString());
 
@@ -32,6 +34,13 @@ public class PistolGun : Gun
         fireRateTimer = _gunRateOfFire;
     }
 
+    private void OnDisable()
+    {
+        DeactivateWeapon();
+
+        if (_isSemiautomatic) InputReader.Instance.AttackAction -= Shoot;
+        InputReader.Instance.ReloadAction -= Reload;
+    }
 
     private void Start()
     {
@@ -46,13 +55,7 @@ public class PistolGun : Gun
         FireRateGunCooldown();
         FullAutoCheck();
     }
-    private void OnDisable()
-    {
-        DeactivateGun();
-
-        if(_isSemiautomatic) InputReader.Instance.AttackAction -= Shoot;
-        InputReader.Instance.ReloadAction -= Reload;
-    }
+    
 
 
 
@@ -81,7 +84,7 @@ public class PistolGun : Gun
 
     public override void Shoot()
     {
-        if (isGunActivated == false || isReadyToFire == false || isReloading == true || ammoInMag == 0) return;
+        if (IsWeaponActivated == false || isReadyToFire == false || isReloading == true || ammoInMag == 0) return;
 
         //Activate Firerate Cooldown
         fireRateTimer = _gunRateOfFire;
@@ -116,7 +119,7 @@ public class PistolGun : Gun
 
     public override void Reload()
     {
-        if ((isGunActivated == false && isReadyToFire == false && isReloading == true) 
+        if ((IsWeaponActivated == false && isReadyToFire == false && isReloading == true) 
             || ammoInInvetory == 0 || (_maxAmmoReserveInMag - ammoInMag) == 0) return;
 
         //Tries to Add ammo to mag

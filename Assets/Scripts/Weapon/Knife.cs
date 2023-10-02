@@ -21,7 +21,6 @@ public class Knife : Weapon
     string attackString;
     int comboCounter = 0;
 
-    bool isKnifeActivated;
     bool isComboDelayActivated;
     bool isComboWindowActivated;
 
@@ -38,7 +37,8 @@ public class Knife : Weapon
     private void OnEnable()
     {
         PlayEnterAnimation();
-        Invoke(nameof(Activate), _knifeActivateTime);
+        if(!stateMachine.IsGrabbing)
+            Invoke(nameof(ActivateWeapon), _knifeActivateTime);
 
         InputReader.Instance.AttackAction += Attack;
         comboCounter = 0;
@@ -46,7 +46,7 @@ public class Knife : Weapon
 
     private void OnDisable()
     {
-        Deactivate();
+        DeactivateWeapon();
 
         InputReader.Instance.AttackAction -= Attack;
     }
@@ -114,7 +114,7 @@ public class Knife : Weapon
 
     private void Attack()
     {
-        if (isKnifeActivated == false || isComboDelayActivated == true) return;
+        if (IsWeaponActivated == false || isComboDelayActivated == true) return;
 
         //Add Combo Counter
         if (isComboWindowActivated == true)
@@ -143,15 +143,6 @@ public class Knife : Weapon
         isComboWindowActivated = false;
     }
 
-    private void Activate()
-    {
-        isKnifeActivated = true;
-    }
-
-    private void Deactivate()
-    {
-        isKnifeActivated = false;
-    }
 
 }
 

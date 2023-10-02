@@ -98,10 +98,6 @@ public class InputReader : MonoBehaviour, PlayerControls.IGamePlayActions
 
     public void OnCrouch(InputAction.CallbackContext context)
     {
-        //if (!context.performed) return;
-
-        //Debug.Log(context.ToString());
-
         if (context.performed)
         {
             SlidingAction?.Invoke();
@@ -161,19 +157,26 @@ public class InputReader : MonoBehaviour, PlayerControls.IGamePlayActions
         if (context.performed)
         {
             QAbilityActionPressed?.Invoke();
-            isGrabAbility = true;
+            isGrabAbility = !IsGrabAbility;
         }
 
-        if (context.canceled)
-        {
-            QAbilityActionUnPressed?.Invoke();
-            isGrabAbility = false;
-        }
+        //if (context.canceled)
+        //{
+        //    QAbilityActionUnPressed?.Invoke();
+        //    isGrabAbility = false;
+        //}
     }
 
     public void OnAbility2(InputAction.CallbackContext context)
     {
         if (context.performed) return;
         EAbilityAction?.Invoke();
+    }
+
+
+    //EXTRA function
+    public void ForcePushed()
+    {
+        isGrabAbility = false;
     }
 }

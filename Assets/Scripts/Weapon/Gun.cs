@@ -39,14 +39,11 @@ public abstract class Gun : Weapon
     [SerializeField] int _gunSplashPool;
     List<WeaponParticleSplash> _splashObjs = new List<WeaponParticleSplash>();
 
-    protected bool isGunActivated = false;
    
     public event Action OnGunEnable;
    
     public abstract void Shoot();
     public abstract void Reload();
-    protected void ActivateGun() => isGunActivated = true;
-    protected void DeactivateGun() => isGunActivated = false;
 
     protected void CreateBulletCasingPool()
     {

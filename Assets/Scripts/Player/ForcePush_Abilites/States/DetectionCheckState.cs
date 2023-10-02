@@ -42,7 +42,10 @@ public class DetectionCheckState: ForcePushBaseState
 
             StateMachine.SwitchState(new GrabState(StateMachine));
         }
-
+        else
+        {
+            InputReader.Instance.ForcePushed();
+        }
         
     }
 

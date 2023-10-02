@@ -180,7 +180,7 @@ Transform:
   m_GameObject: {fileID: 4735722549313044259}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0.15131198, y: 0.06138354, z: -0.00043619578}
+  m_LocalPosition: {x: -0.151622, y: 0.061384, z: -0.001262}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -291,7 +291,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8544283924379145968
 Transform:
   m_ObjectHideFlags: 0
@@ -347,14 +347,15 @@ MonoBehaviour:
   _isTextActivated: 1
   _inventoryType: 1
   _gunAnimator: {fileID: 2994367410848534748}
+  isUnlimitedAmmo: 0
   _gunType: 0
+  _isSemiautomatic: 1
   _equipGunTime: 0.4
   _gunReloadTime: 1.3
   _gunDamage: 1
   _forceFeedBackValue: 0
   _forceFeedForwardValue: 10
   _gunRange: 40
-  _isSemiautomatic: 1
   _gunRateOfFire: 0.2
   _maxAmmoReserveInMag: 9
   _maxAmmoReserveInInvetory: 45
