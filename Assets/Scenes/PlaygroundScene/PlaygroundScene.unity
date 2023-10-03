@@ -4403,7 +4403,7 @@ PrefabInstance:
     - target: {fileID: 2072490268804525935, guid: 4b310b1f6b5db5a4fa8ac331a12b02de,
         type: 3}
       propertyPath: m_Dutch
-      value: 0.000002743982
+      value: -2.179077e-33
       objectReference: {fileID: 0}
     - target: {fileID: 2089911642317393387, guid: 4b310b1f6b5db5a4fa8ac331a12b02de,
         type: 3}
@@ -4415,6 +4415,11 @@ PrefabInstance:
       propertyPath: speedDebugText
       value: 
       objectReference: {fileID: 44850515}
+    - target: {fileID: 3412810247586536632, guid: 4b310b1f6b5db5a4fa8ac331a12b02de,
+        type: 3}
+      propertyPath: field of view
+      value: 91.78086
+      objectReference: {fileID: 0}
     - target: {fileID: 4205302139498410346, guid: 4b310b1f6b5db5a4fa8ac331a12b02de,
         type: 3}
       propertyPath: _ui
@@ -4474,6 +4479,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerContainer
+      objectReference: {fileID: 0}
+    - target: {fileID: 5574923496152042241, guid: 4b310b1f6b5db5a4fa8ac331a12b02de,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 91.78086
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

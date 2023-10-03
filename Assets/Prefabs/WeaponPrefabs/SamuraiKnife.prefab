@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6330621510837065039
 Transform:
   m_ObjectHideFlags: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   _gunAnimator: {fileID: 3465356389560940893}
   _knifeDamage: 10
   _meleeRange: 2
-  _knifeKnockbackForce: 10
+  _knifeKnockbackForce: 50
   _knifeActivateTime: 0.4
   maxComboCounter: 3
   _attackCollider: {fileID: 0}
@@ -111,17 +111,14 @@ MonoBehaviour:
     _attackDamage: 1
     _comboDelayOfAttack: 0.2
     _comboWindowTimeOfAttack: 0.4
-    _knifeForce: 10
   - _nameOfAttack: Attack1
     _attackDamage: 1
     _comboDelayOfAttack: 0.2
     _comboWindowTimeOfAttack: 0.4
-    _knifeForce: 10
   - _nameOfAttack: Attack2
     _attackDamage: 1
     _comboDelayOfAttack: 0.3
     _comboWindowTimeOfAttack: 0.2
-    _knifeForce: 10
 --- !u!95 &3465356389560940893
 Animator:
   serializedVersion: 5

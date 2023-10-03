@@ -28,6 +28,7 @@ public class Knife : Weapon
     float comboWindownTimer;
 
     Camera mainCam;
+    List<Collider> objsAttacked = new List<Collider>();
 
     private void Awake()
     {
@@ -72,10 +73,13 @@ public class Knife : Weapon
 
             foreach (RaycastHit obj in hitObjs)
             {
-                Rigidbody rb = obj.collider.attachedRigidbody;
+                Rigidbody rb = obj.collider.attachedRigidbody;              
 
-                if (rb == null) continue;
+                if (rb == null || objsAttacked.Contains(obj.collider)) continue;
+
+                objsAttacked.Add(obj.collider);
                 rb.AddForce(mainCam.transform.forward * _knifeKnockbackForce, ForceMode.Impulse);
+
 
                 //TODO: Add damage here
             }
@@ -105,9 +109,10 @@ public class Knife : Weapon
             if (comboDelayTimer >= _knifeCombos[comboCounter].ComboDelayAttack)
             {
                 isComboDelayActivated = false;
-
                 comboWindownTimer = 0f;
                 isComboWindowActivated = true;
+                
+                
             }
         }
     }
@@ -125,11 +130,8 @@ public class Knife : Weapon
                 comboCounter = 0;
             }
         }
-        
 
-        //Add damage to enemy
-
-
+        objsAttacked.Clear();
 
         //Trigger Animation
         _gunAnimator.SetTrigger(_knifeCombos[comboCounter].NameOfAttack);
@@ -154,11 +156,9 @@ public class KnifeCombo
     [SerializeField] int _attackDamage;
     [SerializeField] float _comboDelayOfAttack;
     [SerializeField] float _comboWindowTimeOfAttack;
-    [SerializeField] float _knifeForce;
 
     public string NameOfAttack { get { return _nameOfAttack; } }
     public int AttackDamage { get { return _attackDamage; } }
     public float ComboDelayAttack { get { return _comboDelayOfAttack; } }
     public float ComboWindowOfAttack { get { return _comboWindowTimeOfAttack; } }
-    public float KnifeForce { get { return _knifeForce; } }
 }
